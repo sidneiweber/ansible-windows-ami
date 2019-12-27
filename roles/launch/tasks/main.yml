@@ -5,9 +5,6 @@
       name: Windows_Server-2019-English-Full-Base*
   register: found_amis
 
-- debug:
-    msg: "{{ found_amis }}"
-
 - set_fact:
     win_ami_id: "{{ (found_amis.images | first).image_id  }}"
 
@@ -45,7 +42,7 @@
     wait: yes
     wait_timeout: 500
     exact_count: 1
-    assign_public_ip: no
+    assign_public_ip: yes
     vpc_subnet_id: "{{ subnet }}"
     count_tag:
       Name: stock-win-ami-test
