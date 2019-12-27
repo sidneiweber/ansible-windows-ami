@@ -5,7 +5,8 @@
       name: Windows_Server-2019-English-Full-Base*
   register: found_amis
 
-- set_fact:
+- name: Get AMI Windows
+  set_fact:
     win_ami_id: "{{ (found_amis.images | first).image_id  }}"
 
 - name: Ensure security group is present

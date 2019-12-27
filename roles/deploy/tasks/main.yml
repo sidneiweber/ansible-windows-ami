@@ -73,4 +73,4 @@
     state: present
     
 - debug:
-    msg: web application is available at http://{{ ansible_ssh_host}}/
+    msg: web application is available at http://{{ ansible_ssh_host }}/
