@@ -1,0 +1,76 @@
+
+- name: Copy Script config
+  win_copy:
+    src: script.ps1
+    dest: C:\Windows\Temp\script.ps1
+
+- name: Execute script
+  win_shell: C:\Windows\Temp\script.ps1
+
+- name: ensure IIS and ASP.NET are installed
+  win_feature:
+    name:
+      - Web-Server
+      - Web-Http-Redirect
+      - Web-DAV-Publishing
+      - Web-Custom-Logging
+      - Web-Log-Libraries
+      - Web-ODBC-Logging
+      - Web-Request-Monitor
+      - Web-Http-Tracing
+      - Web-Dyn-Compression
+      - Web-Basic-Auth
+      - Web-CertProvider
+      - Web-Client-Auth
+      - Web-Digest-Auth
+      - Web-Cert-Auth
+      - Web-IP-Security
+      - Web-Url-Auth
+      - Web-Windows-Auth
+      - Web-App-Dev
+      - Web-Net-Ext
+      - Web-Net-Ext45
+      - Web-Asp-Net45
+      - Web-ISAPI-Ext
+      - Web-ISAPI-Filter
+      - Web-Mgmt-Tools
+      - Web-Scripting-Tools
+      - Web-Mgmt-Console
+      - Web-Mgmt-Service
+      - NET-Framework-Features
+      - NET-Framework-Core
+      - NET-HTTP-Activation
+      - NET-Non-HTTP-Activ
+      - NET-Framework-45-Features
+      - NET-Framework-45-Core
+      - NET-Framework-45-ASPNET
+      - NET-WCF-Services45
+      - MSMQ
+      - MSMQ-Services
+      - MSMQ-Server
+      - FS-SMB1
+      - Telnet-Client
+      - PowerShellRoot
+      - PowerShell
+      - PowerShell-V2
+      - PowerShell-ISE
+      - WAS
+      - WAS-Process-Model
+      - WAS-NET-Environment
+      - WAS-Config-APIs
+      - WoW64-Support
+    state: present
+    include_management_tools: yes
+  register: windows_install
+
+- name: Reboot if installing Web-Server feature requires it
+  win_reboot:
+  when: windows_install.reboot_required
+
+- name: Install 7Zip
+  win_chocolatey:
+    name: 7zip
+    state: present
+    
+- debug:
+    msg: web application is available at http://{{ ansible_ssh_host}}/

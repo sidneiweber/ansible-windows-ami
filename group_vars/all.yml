@@ -1,0 +1,11 @@
+target_aws_region: us-east-1
+instance_type: t3.small
+keypair: nomechave
+vpc_id: vpc-xxx
+subnet: subnet-xxxx
+win_initial_password: myTempPassword123!
+volumes:
+  - device_name: /dev/sda1
+    device_type: gp2
+    volume_size: 30
+    delete_on_termination: true
