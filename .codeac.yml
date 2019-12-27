@@ -1,0 +1,9 @@
+---
+
+version: '1'
+
+tools:
+  ansibleLint:
+    files:
+      - roles/**/**/*.yml
+      - deploy.yml
